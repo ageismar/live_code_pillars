@@ -13,16 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //serving up static files
-app.use(express.static(path.resolve(__dirname, "..", "index.html")));
+app.use(express.static(path.resolve(__dirname, "..")));
 
 // REQUIRED: send poke routes to pokemon file!!! ************************************
 app.use("/pokemon", require("./api/pokemon"));
 
-const trainerRouter = require("./api/trainer");
-
-app.use("/trainer", trainerRouter);
-
 // REQUIRED: send trainer routes to trainer file!!! *********************************
+const trainerRouter = require("./api/trainer");
+app.use("/trainer", trainerRouter);
 
 // error handling middleware comes last
 // Express identifies this as error handling middleware

@@ -22,9 +22,9 @@ top priority items in bold:
 - stateless comp
 - **map (with key)**
 
-# To run server
+# To Run
 
-- node server/api/index.js
+- npm run start
 
 # To seed file
 

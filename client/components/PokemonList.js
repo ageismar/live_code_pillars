@@ -1,20 +1,7 @@
 import React from "react";
 
-class PokemonList extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      pokemons: []
-    };
-  }
-
-  async componentDidMount() {
-    // fetch pokemons from the backend
-  }
-
-  render() {
-    return <div>Hello World!</div>;
-  }
-}
+// Create a class component called Pokemo List.
+// This component should call the backend for all the Pokemons
+// Crate a SinglePokemon componenet for each Pokemon
 
 export default PokemonList;

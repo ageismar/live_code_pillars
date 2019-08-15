@@ -1,5 +1,5 @@
 import React from "react";
 
-const Pokemon = props => {
-  return <div />;
-};
+// Create a component that displays a Pokemon's name and description
+
+export default Pokemon;

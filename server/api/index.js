@@ -1,25 +1,23 @@
-const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
+const express = require("express");
+const morgan = require("morgan");
+const path = require("path");
 const port = 8000;
 
 const app = express();
 
 //logging middleware
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 //body-parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //serving up static files
-app.use(express.static(path.resolve(__dirname, '../public')));
+app.use(express.static(path.resolve(__dirname, "../public")));
 
-//send poke routes to pokemon file
-app.use('/api/pokemon', require('./pokemon'));
+// REQUIRED: send poke routes to pokemon file!!! ************************************
 
-//send trainer routes to trainer file
-app.use('/api/trainers', require('./trainer'));
+// REQUIRED: send trainer routes to trainer file!!! *********************************
 
 // error handling middleware comes last
 // Express identifies this as error handling middleware

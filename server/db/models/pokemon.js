@@ -1,45 +1,47 @@
-'use strict';
+"use strict";
 
-const db = require('../database');
-const Sequelize = require('sequelize');
-
-//You don't actually need trainer.
-const Trainer = require('./trainer');
+const db = require("../database");
+const Sequelize = require("sequelize");
 
 // SCHEMA: set up name (string), pokedexNum (integer), element (string), description (text)
 
-const Pokemon = db.define('pokemon', {
+const Pokemon = db.define("pokemon", {
   name: {
-    type: Sequelize.STRING,
-    allowNull: false,
+    type: Sequelize.STRING
   },
   pokedexNum: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
+    type: Sequelize.INTEGER
   },
   element: {
-    type: Sequelize.STRING,
-    allowNull: false,
+    type: Sequelize.STRING
   },
   description: {
-    type: Sequelize.TEXT,
-  },
+    type: Sequelize.TEXT
+  }
 });
 
-// INSTANCE METHOD(S) - NO ARROW FUNCTIONS:
+// INSTANCE METHOD
 
-// CLASS METHOD(S) - not sure if async/await required?:
+Pokemon.prototype.shoutElement = function() {
+  return this.element.toUpperCase();
+};
 
-Pokemon.findByName = async name => {
-  return await Pokemon.findOne({
+// CLASS METHOD(S):
+
+Pokemon.getFirePokemon = async function() {
+  return await Pokemon.findAll({
     where: {
-      name,
-    },
+      element: "fire"
+    }
   });
 };
 
 // HOOKS:
 
-// ASSOCIATIONS: (belongsTo required)
+//Pokemon.beforeValidate(poke => {
+//   if (poke.element !== "water" || poke.element !== "fire") {
+//     throw new Error("NOT WATER OR FIREEEEEEEEEEEEEEEEEEE");
+//   }
+// });
 
 module.exports = Pokemon;

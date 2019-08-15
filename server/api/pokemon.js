@@ -1,53 +1,48 @@
-const router = require('express').Router();
-const { Pokemon } = require('../db/index');
+const router = require("express").Router();
+const { Pokemon } = require("../db/index");
 
-router.get('/all', async (req, res, next) => {
+/* Write a route for getting:
+    - deleting a pokemon by id
+
+    if time allows:
+    - get Pokemon by id
+*/
+
+router.get("/", async (req, res, next) => {
   try {
-    const allPokemon = await Pokemon.findAll();
-    res.send(allPokemon);
-  } catch (err) {
-    next(err);
+    const pokes = await Pokemon.findAll();
+    res.send(pokes);
+  } catch (error) {
+    next(error);
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const poke = await Pokemon.findOne({
+    const newPoke = await Pokemon.create(req.body);
+    res.status(201).send(newPoke);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// const numAffectedRows = await Pug.destroy({
+//     where: {
+//       age: 7 // deletes all pugs whose age is 7
+//     }
+//   })
+
+router.delete("/:name", async (req, res, next) => {
+  try {
+    const name = req.params.name;
+    const deletedPoke = await Pokemon.destroy({
       where: {
-        id: req.params.id,
-      },
+        name: name
+      }
     });
-    res.send(poke);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post('/', async (req, res, next) => {
-  try {
-    const { name, pokedexNum, element, description } = req.body;
-    const newPoke = await Pokemon.create({
-      name,
-      pokedexNum,
-      element,
-      description,
-    });
-    res.send(newPoke);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.delete('/:id', async (req, res, next) => {
-  try {
-    const deleted = await Pokemon.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.json(deleted);
-  } catch (err) {
-    next(err);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
   }
 });
 

@@ -6,13 +6,12 @@ top priority items in bold:
 - some validations
 - instance methods
 - class methods
-- **(added by jess: at least 1 instance OR class method)**
 - hooks
 - **associations**
 
 # EXPRESS
 
-- write up a router (<-- the router will already be defined for them on pillars, they'll just need to add to it)
+- write up a router
 - **GET with and without params**
 - POST
 - **PUT (remember returning true)**
@@ -23,5 +22,10 @@ top priority items in bold:
 - stateless comp
 - **map (with key)**
 
-To run server
-node server/api/index.js
+# To run server
+
+- node server/api/index.js
+
+# To seed file
+
+- node seed.js

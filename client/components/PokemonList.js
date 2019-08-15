@@ -1,19 +1,33 @@
 import React from "react";
+import axios from "axios";
+import SinglePokemon from "./SinglePokemon";
 
 class PokemonList extends React.Component {
   constructor() {
     super();
     this.state = {
-      pokemons: []
+      allPokemons: []
     };
   }
 
   async componentDidMount() {
-    // fetch pokemons from the backend
+    try {
+      const pokeResult = await axios.get("/pokemon");
+      const allPokemons = pokeResult.data;
+      this.setState({ allPokemons });
+    } catch (error) {
+      console.error("something bad happened", error);
+    }
   }
 
   render() {
-    return <div>Hello World!</div>;
+    return (
+      <div>
+        {this.state.allPokemons.map(poke => {
+          return <SinglePokemon key={poke.id} pokemon={poke} />;
+        })}
+      </div>
+    );
   }
 }
 

@@ -1,7 +1,11 @@
-const router = require('express').Router();
-const { Trainer, Pokemon } = require('../db/index');
+const router = require("express").Router();
+const { Trainer, Pokemon } = require("../db/index");
 
-router.get('/all', async (req, res, next) => {
+/* Some routes have already been completed. Write a route for:
+  - Adding a badge to a trainer by id
+*/
+
+router.get("/all", async (req, res, next) => {
   try {
     const allTrainers = await Trainer.findAll();
     res.send(allTrainers);
@@ -10,13 +14,13 @@ router.get('/all', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const trainer = await Trainer.findOne({
       where: {
-        id: req.params.id,
+        id: req.params.id
       },
-      include: [{ model: Pokemon }],
+      include: [{ model: Pokemon }]
     });
     res.send(trainer);
   } catch (err) {
@@ -24,26 +28,13 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
-  try {
-    const trainer = await Trainer.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
-    const newName = req.body.newName;
-    const row = await trainer.update({ name: newName });
-    res.send(row);
-  } catch (err) {
-    next(err);
-  }
-});
+// INSERT HERE
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { name } = req.body;
     const newTrainer = await Trainer.create({
-      name,
+      name
     });
     res.send(newTrainer);
   } catch (err) {
@@ -51,12 +42,12 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const deleted = await Trainer.destroy({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     });
     res.json(deleted);
   } catch (err) {

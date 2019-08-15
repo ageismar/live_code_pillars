@@ -1,0 +1,4 @@
+1) Models
+2) Associations
+3) Routes
+4) ~~~ REACT ~~~

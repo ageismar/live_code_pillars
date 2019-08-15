@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const port = 8000;
+const port = 8080;
 
 const app = express();
 
@@ -13,9 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //serving up static files
-app.use(express.static(path.resolve(__dirname, "../public")));
+app.use(express.static(path.resolve(__dirname, "..", "index.html")));
 
 // REQUIRED: send poke routes to pokemon file!!! ************************************
+app.use("/pokemon", require("./api/pokemon"));
+
+const trainerRouter = require("./api/trainer");
+
+app.use("/trainer", trainerRouter);
 
 // REQUIRED: send trainer routes to trainer file!!! *********************************
 

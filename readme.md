@@ -20,7 +20,7 @@ top priority items in bold:
 # REACT
 
 - **stateful comp (no methods)**
-- dumb comp
+- stateless comp
 - **map (with key)**
 
 To run server

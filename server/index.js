@@ -18,10 +18,6 @@ app.use(express.static(path.resolve(__dirname, "..")));
 // REQUIRED: send poke routes to pokemon file!!! ************************************
 app.use("/api", require("./api"));
 
-// REQUIRED: send trainer routes to trainer file!!! *********************************
-const trainerRouter = require("./api/trainer");
-app.use("/trainer", trainerRouter);
-
 // error handling middleware comes last
 // Express identifies this as error handling middleware
 // because it has 4 parameters, the first of which is an 'err'

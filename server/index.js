@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, "..")));
 
 // REQUIRED: send poke routes to pokemon file!!! ************************************
-app.use("/pokemon", require("./api/pokemon"));
+app.use("/api", require("./api"));
 
 // REQUIRED: send trainer routes to trainer file!!! *********************************
 const trainerRouter = require("./api/trainer");

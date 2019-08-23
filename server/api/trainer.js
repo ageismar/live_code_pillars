@@ -5,7 +5,7 @@ const { Trainer, Pokemon } = require("../db/index");
   - Adding a badge to a trainer by id
 */
 
-router.get("/all", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const allTrainers = await Trainer.findAll();
     res.send(allTrainers);

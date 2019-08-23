@@ -12,7 +12,7 @@ class PokemonList extends React.Component {
 
   async componentDidMount() {
     try {
-      const pokeResult = await axios.get("/pokemon");
+      const pokeResult = await axios.get("/api/pokemon");
       const allPokemons = pokeResult.data;
       this.setState({ allPokemons });
     } catch (error) {

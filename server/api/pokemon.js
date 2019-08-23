@@ -9,14 +9,14 @@ const { Pokemon } = require('../db/index');
 -updating a pokemon in real time
 
 if we have time:
--delete a pokemon
+-delete a pokemon slice
 
 */
 
 router.get('/', async (req, res, next) => {
   try {
-    const pokes = await Pokemon.findAll();
-    res.send(pokes);
+    const allPoke = await Pokemon.findAll();
+    res.send(allPoke);
   } catch (error) {
     next(error);
   }
@@ -24,8 +24,13 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const poke = await Pokemon.findByPk(req.params.id);
-    res.send(poke);
+    const id = req.params.id;
+    const pokemon = await Pokemon.findByPk(id);
+    if (!pokemon) {
+      res.sendStatus(404);
+    } else {
+      res.json(pokemon);
+    }
   } catch (error) {
     next(error);
   }
@@ -33,8 +38,12 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newPoke = await Pokemon.create(req.body);
-    res.status(201).send(newPoke);
+    const newPoke = await Pokemon.create({
+      name: req.body.name,
+      description: req.body.description,
+      element: req.body.element
+    });
+    res.send(newPoke);
   } catch (error) {
     next(error);
   }
@@ -42,36 +51,29 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const [, [updatedPoke]] = await Pokemon.update(req.body, {
-      returning: true,
+    const [, pokemonToUpdate] = await Pokemon.update(req.body, {
+      where: {
+        id: req.params.id
+      },
+      returning: true
+    });
+    res.json(pokemonToUpdate[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const deletedPokemon = await Pokemon.destroy({
       where: {
         id: req.params.id
       }
-    });
-    res.json(updatedPoke);
+    })
+    res.sendStatus(204)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
-
-// const numAffectedRows = await Pug.destroy({
-//     where: {
-//       age: 7 // deletes all pugs whose age is 7
-//     }
-//   })
-
-router.delete('/:name', async (req, res, next) => {
-  try {
-    const name = req.params.name;
-    const deletedPoke = await Pokemon.destroy({
-      where: {
-        name: name
-      }
-    });
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
-  }
-});
+})
 
 module.exports = router;

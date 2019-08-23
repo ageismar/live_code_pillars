@@ -1,11 +1,12 @@
-"use strict";
+'use strict';
 
-const db = require("../database");
-const Sequelize = require("sequelize");
+const db = require('../database');
+const Sequelize = require('sequelize');
 
-// SCHEMA: set up name (string), pokedexNum (integer), element (string), description (text)
+//add column with number of times a poke is caught
+//it should always initialize to one
 
-const Pokemon = db.define("pokemon", {
+const Pokemon = db.define('pokemon', {
   name: {
     type: Sequelize.STRING
   },
@@ -21,27 +22,12 @@ const Pokemon = db.define("pokemon", {
 });
 
 // INSTANCE METHOD
+//create a method called isCaliente and will return true if the pokemon is a fire type
 
-Pokemon.prototype.shoutElement = function() {
-  return this.element.toUpperCase();
-};
+// CLASS METHOD(S)
+//create a method to return all the pokemon with the word 'mouse' in their description.
 
-// CLASS METHOD(S):
-
-Pokemon.getFirePokemon = async function() {
-  return await Pokemon.findAll({
-    where: {
-      element: "fire"
-    }
-  });
-};
-
-// HOOKS:
-
-//Pokemon.beforeValidate(poke => {
-//   if (poke.element !== "water" || poke.element !== "fire") {
-//     throw new Error("NOT WATER OR FIREEEEEEEEEEEEEEEEEEE");
-//   }
-// });
+// HOOKS
+//everytime the trainerId is changed, the caught number increments by 1
 
 module.exports = Pokemon;
